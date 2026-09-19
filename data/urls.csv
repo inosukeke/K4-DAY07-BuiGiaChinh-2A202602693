@@ -1,0 +1,9 @@
+url,doc_id,title,audience,department,category,language,document_version,license_or_permission
+https://library.georgetown.edu/policies/borrowing/materials/books,borrowing-books-undergraduate,Borrowing Books - Undergraduate Students,student,library,borrowing,en,not-stated,public-source
+https://library.georgetown.edu/policies/borrowing/materials/books,borrowing-books-faculty,Borrowing Books - Faculty,faculty,library,borrowing,en,not-stated,public-source
+https://library.georgetown.edu/course-reserves/students,course-reserves-student,Course Reserves Information for Students,student,library,course-reserves,en,not-stated,public-source
+https://library.georgetown.edu/course-reserves/faculty,course-reserves-faculty,Course Reserves Information for Faculty,faculty,library,course-reserves,en,not-stated,public-source
+https://library.georgetown.edu/policies/borrowing/materials/media,borrowing-media,Borrowing Media,all,library,borrowing-media,en,not-stated,public-source
+https://library.georgetown.edu/equipment,equipment-loans,Equipment Loans,all,library,equipment,en,not-stated,public-source
+https://library.georgetown.edu/loans,interlibrary-consortium-loans,Interlibrary and Consortium Loans,all,library,interlibrary-loan,en,not-stated,public-source
+https://library.georgetown.edu/policies/library-use,library-use-policy,Library Use Policies,all,library,library-use,en,not-stated,public-source

@@ -47,8 +47,20 @@ class SentenceChunker:
         self.max_sentences_per_chunk = max(1, max_sentences_per_chunk)
 
     def chunk(self, text: str) -> list[str]:
-        # TODO: split into sentences, group into chunks
-        raise NotImplementedError("Implement SentenceChunker.chunk")
+        if not text or not text.strip():
+            return []
+
+        # Split AFTER sentence-ending punctuation so punctuation is preserved.
+        sentences = re.split(r"(?<=[.!?])\s+", text.strip())
+        sentences = [sentence.strip() for sentence in sentences if sentence.strip()]
+
+        chunks: list[str] = []
+
+        for start in range(0, len(sentences), self.max_sentences_per_chunk):
+            group = sentences[start : start + self.max_sentences_per_chunk]
+            chunks.append(" ".join(group).strip())
+
+        return chunks
 
 
 class RecursiveChunker:
@@ -61,17 +73,101 @@ class RecursiveChunker:
 
     DEFAULT_SEPARATORS = ["\n\n", "\n", ". ", " ", ""]
 
-    def __init__(self, separators: list[str] | None = None, chunk_size: int = 500) -> None:
-        self.separators = self.DEFAULT_SEPARATORS if separators is None else list(separators)
+    def __init__(
+        self,
+        separators: list[str] | None = None,
+        chunk_size: int = 500,
+    ) -> None:
+        self.separators = (
+            self.DEFAULT_SEPARATORS
+            if separators is None
+            else list(separators)
+        )
         self.chunk_size = chunk_size
 
     def chunk(self, text: str) -> list[str]:
-        # TODO: implement recursive splitting strategy
-        raise NotImplementedError("Implement RecursiveChunker.chunk")
+        if not text or not text.strip():
+            return []
 
-    def _split(self, current_text: str, remaining_separators: list[str]) -> list[str]:
-        # TODO: recursive helper used by RecursiveChunker.chunk
-        raise NotImplementedError("Implement RecursiveChunker._split")
+        return [
+            chunk.strip()
+            for chunk in self._split(text.strip(), self.separators)
+            if chunk.strip()
+        ]
+
+    def _split(
+        self,
+        current_text: str,
+        remaining_separators: list[str],
+    ) -> list[str]:
+        if not current_text:
+            return []
+
+        if len(current_text) <= self.chunk_size:
+            return [current_text]
+
+        # No separators left: hard split.
+        if not remaining_separators:
+            return [
+                current_text[start : start + self.chunk_size]
+                for start in range(0, len(current_text), self.chunk_size)
+            ]
+
+        separator = remaining_separators[0]
+        next_separators = remaining_separators[1:]
+
+        # Empty separator means hard character-level splitting.
+        if separator == "":
+            return [
+                current_text[start : start + self.chunk_size]
+                for start in range(0, len(current_text), self.chunk_size)
+            ]
+
+        # This separator does not occur: try the next one.
+        if separator not in current_text:
+            return self._split(current_text, next_separators)
+
+        raw_parts = current_text.split(separator)
+
+        # Reattach the separator so semantic boundaries are preserved.
+        parts: list[str] = []
+        for index, part in enumerate(raw_parts):
+            if not part:
+                continue
+
+            if index < len(raw_parts) - 1:
+                parts.append(part + separator)
+            else:
+                parts.append(part)
+
+        # Split oversized pieces recursively first.
+        pieces: list[str] = []
+
+        for part in parts:
+            if len(part) > self.chunk_size:
+                pieces.extend(self._split(part, next_separators))
+            else:
+                pieces.append(part)
+
+        # Merge adjacent small pieces back towards chunk_size.
+        merged: list[str] = []
+        current = ""
+
+        for piece in pieces:
+            if not current:
+                current = piece
+                continue
+
+            if len(current) + len(piece) <= self.chunk_size:
+                current += piece
+            else:
+                merged.append(current.strip())
+                current = piece
+
+        if current:
+            merged.append(current.strip())
+
+        return merged
 
 
 def _dot(a: list[float], b: list[float]) -> float:
@@ -86,13 +182,48 @@ def compute_similarity(vec_a: list[float], vec_b: list[float]) -> float:
 
     Returns 0.0 if either vector has zero magnitude.
     """
-    # TODO: implement cosine similarity formula
-    raise NotImplementedError("Implement compute_similarity")
+    magnitude_a = math.sqrt(_dot(vec_a, vec_a))
+    magnitude_b = math.sqrt(_dot(vec_b, vec_b))
+
+    if magnitude_a == 0.0 or magnitude_b == 0.0:
+        return 0.0
+
+    return _dot(vec_a, vec_b) / (magnitude_a * magnitude_b)
 
 
 class ChunkingStrategyComparator:
     """Run all built-in chunking strategies and compare their results."""
 
     def compare(self, text: str, chunk_size: int = 200) -> dict:
-        # TODO: call each chunker, compute stats, return comparison dict
-        raise NotImplementedError("Implement ChunkingStrategyComparator.compare")
+        strategies = {
+            "fixed_size": FixedSizeChunker(
+                chunk_size=chunk_size,
+                overlap=min(50, max(0, chunk_size // 4)),
+            ),
+            "by_sentences": SentenceChunker(
+                max_sentences_per_chunk=3,
+            ),
+            "recursive": RecursiveChunker(
+                chunk_size=chunk_size,
+            ),
+        }
+
+        result: dict = {}
+
+        for name, chunker in strategies.items():
+            chunks = chunker.chunk(text)
+            count = len(chunks)
+
+            avg_length = (
+                sum(len(chunk) for chunk in chunks) / count
+                if count
+                else 0.0
+            )
+
+            result[name] = {
+                "count": count,
+                "avg_length": avg_length,
+                "chunks": chunks,
+            }
+
+        return result

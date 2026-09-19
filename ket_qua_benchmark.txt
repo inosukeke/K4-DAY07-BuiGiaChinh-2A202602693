@@ -1,0 +1,127 @@
+﻿=== CP5 RETRIEVAL BENCHMARK ===
+Data directory     : data\library-policy
+Strategy           : fixed_size
+Embedding backend  : sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+Documents          : 8
+Chunks loaded      : 30
+Chunks per document:
+  - borrowing-books-faculty: 1
+  - borrowing-books-undergraduate: 1
+  - borrowing-media: 4
+  - course-reserves-faculty: 7
+  - course-reserves-student: 3
+  - equipment-loans: 4
+  - interlibrary-consortium-loans: 6
+  - library-use-policy: 4
+
+========================================================================================
+Q1: How long can I borrow books?
+Gold document(s): borrowing-books-undergraduate
+Gold answer: For an undergraduate student, the number of books is unlimited and the loan period is 6 weeks.
+Answer markers: ['6 weeks']
+Metadata filter: {'audience': 'student'}
+  1. score=0.6046 doc_id=borrowing-books-undergraduate chunk=0 audience=student markers=['6 weeks']
+     # Borrowing Books - Undergraduate Students ## Georgetown Users | Type of Patron | # of Books | Loan Period | |------------------------|-----------:|-------------| | Undergraduate Students...
+  2. score=0.4880 doc_id=course-reserves-student chunk=0 audience=student markers=[]
+     # Course Reserves Information for Students ## Book Reserves Use the search bar above to look up physical books. You can search by the bookâ€™s title, the professorâ€™s last name, or the cours...
+  3. score=0.4453 doc_id=course-reserves-student chunk=1 audience=student markers=[]
+     be checked in then out at the Circulation Desk. Reserve items are available on a first come, first served basis. Reserve items cannot be held, recalled, or renewed. ## Overdue Fines for R...
+Gold doc rank       : 1
+Naive (doc_id) hit  : YES
+Content hit         : YES
+Points              : 2/2
+
+  --- A/B: Q1 WITHOUT metadata filter ---
+Metadata filter: None
+  1. score=0.6046 doc_id=borrowing-books-undergraduate chunk=0 audience=student markers=['6 weeks']
+     # Borrowing Books - Undergraduate Students ## Georgetown Users | Type of Patron | # of Books | Loan Period | |------------------------|-----------:|-------------| | Undergraduate Students...
+  2. score=0.5903 doc_id=interlibrary-consortium-loans chunk=3 audience=all markers=[]
+     terlibrary Loan Request" may be shipped from around the world or other parts of the country. Average delivery times for Interlibrary Loans are 7-14 business days. ## Recalls & Holds ### H...
+  3. score=0.5430 doc_id=equipment-loans chunk=1 audience=all markers=[]
+     y's Borrowing Policies page for more information. Reservations must be made at least 1 day in advance. It will be on hold shelf for up to 24hrs of pickup date. The pickup location is the ...
+Gold doc rank       : 1
+Naive (doc_id) hit  : YES
+Content hit         : YES
+Points              : 2/2
+
+========================================================================================
+Q2: How many reserve items may a student borrow at one time?
+Gold document(s): course-reserves-student
+Gold answer: Students may borrow up to three reserve items at one time.
+Answer markers: ['up to three reserve items']
+Metadata filter: None
+  1. score=0.5958 doc_id=course-reserves-student chunk=0 audience=student markers=['up to three reserve items']
+     # Course Reserves Information for Students ## Book Reserves Use the search bar above to look up physical books. You can search by the bookâ€™s title, the professorâ€™s last name, or the cours...
+  2. score=0.5882 doc_id=course-reserves-student chunk=1 audience=student markers=[]
+     be checked in then out at the Circulation Desk. Reserve items are available on a first come, first served basis. Reserve items cannot be held, recalled, or renewed. ## Overdue Fines for R...
+  3. score=0.5491 doc_id=borrowing-books-undergraduate chunk=0 audience=student markers=[]
+     # Borrowing Books - Undergraduate Students ## Georgetown Users | Type of Patron | # of Books | Loan Period | |------------------------|-----------:|-------------| | Undergraduate Students...
+Gold doc rank       : 1
+Naive (doc_id) hit  : YES
+Content hit         : YES
+Points              : 2/2
+
+========================================================================================
+Q3: How do I request library equipment, and how far in advance must I reserve it?
+Gold document(s): equipment-loans
+Gold answer: From the equipment page, click "Reserve this item", log into the library account, and make the request. Reservations must be made at least 1 day in advance.
+Answer markers: ['Reserve this item', 'at least 1 day in advance']
+Metadata filter: None
+  1. score=0.5003 doc_id=course-reserves-faculty chunk=4 audience=faculty markers=[]
+     as access to the needed volume/issue we will provide the faculty member with permalink to that journal. ## Media Reserves Media Reserves are not housed on the Libraryâ€™s webpage but in the...
+  2. score=0.4863 doc_id=equipment-loans chunk=1 audience=all markers=['at least 1 day in advance']
+     y's Borrowing Policies page for more information. Reservations must be made at least 1 day in advance. It will be on hold shelf for up to 24hrs of pickup date. The pickup location is the ...
+  3. score=0.4844 doc_id=course-reserves-student chunk=2 audience=student markers=[]
+     derate of other students, please return reserve readings on time. ## Media Reserves Most Media Reserves are not housed on the Libraryâ€™s webpage but in the respective courseâ€™s Canvas. Acce...
+Gold doc rank       : 2
+Naive (doc_id) hit  : YES
+Content hit         : NO  (missing: ['Reserve this item'])
+Points              : 0/2
+
+========================================================================================
+Q4: How long do Interlibrary Loan requests usually take to arrive?
+Gold document(s): interlibrary-consortium-loans
+Gold answer: Average delivery times for Interlibrary Loans are 7-14 business days.
+Answer markers: ['7-14 business days']
+Metadata filter: None
+  1. score=0.7720 doc_id=interlibrary-consortium-loans chunk=3 audience=all markers=['7-14 business days']
+     terlibrary Loan Request" may be shipped from around the world or other parts of the country. Average delivery times for Interlibrary Loans are 7-14 business days. ## Recalls & Holds ### H...
+  2. score=0.5528 doc_id=equipment-loans chunk=1 audience=all markers=[]
+     y's Borrowing Policies page for more information. Reservations must be made at least 1 day in advance. It will be on hold shelf for up to 24hrs of pickup date. The pickup location is the ...
+  3. score=0.4129 doc_id=borrowing-media chunk=2 audience=all markers=[]
+     m your HoyaSearch account, by phone at (202) 687-7607, or in person. ## Consortium Users | Type of Patron | Limitations | Loan Period | |----------------|-------------|-------------| | WR...
+Gold doc rank       : 1
+Naive (doc_id) hit  : YES
+Content hit         : YES
+Points              : 2/2
+
+========================================================================================
+Q5: Where is food allowed in Lauinger Library, and what kinds of food are prohibited?
+Gold document(s): library-use-policy
+Gold answer: Food is allowed only on the second floor of Lauinger Library. Examples of prohibited food include pizza, hamburgers, fries, ice cream, hot subs, and other smelly, greasy, or messy foods.
+Answer markers: ['second floor', 'pizza']
+Metadata filter: None
+  1. score=0.6232 doc_id=library-use-policy chunk=1 audience=all markers=['second floor', 'pizza']
+     d property. - Do not hamper the work of Library staff. - Observe Quiet Study Area designations. - Place cell phones on silent mode and use them only in the lobby and stairwells. - The lib...
+  2. score=0.5187 doc_id=library-use-policy chunk=2 audience=all markers=[]
+     eam, hot subs or any other smelly, greasy or messy foods. - Smoking and use of tobacco or e-cigarettes of any kind is prohibited in all indoor locations on campus and is a violation of th...
+  3. score=0.4488 doc_id=library-use-policy chunk=3 audience=all markers=[]
+     he exception of service animals. - Personal transportation devices are not permitted in the library, except for equipment used by persons with disabilities. Individuals who fail to comply...
+Gold doc rank       : 1
+Naive (doc_id) hit  : YES
+Content hit         : YES
+Points              : 2/2
+
+========================================================================================
+=== CP6 SCORING SUMMARY ===
+Naive = gold doc_id in top-3; Content = all answer markers in top-3 context.
+Query            Naive  Content  Points
+Q1               YES    YES      2/2
+Q1 (no filter)   YES    YES      2/2
+Q2               YES    YES      2/2
+Q3               YES    NO       0/2
+Q4               YES    YES      2/2
+Q5               YES    YES      2/2
+Naive doc hits in top-3     : 5/5
+Content-relevant in top-3   : 4/5
+Total points                : 8/10

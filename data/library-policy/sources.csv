@@ -1,0 +1,9 @@
+doc_id,file_path,title,source_url,retrieved_at,document_version,license_or_permission
+borrowing-books-faculty,data/library-policy/borrowing-books-faculty.md,Borrowing Books - Faculty,https://library.georgetown.edu/policies/borrowing/materials/books,2026-09-19,not-stated,public-source
+borrowing-books-undergraduate,data/library-policy/borrowing-books-undergraduate.md,Borrowing Books - Undergraduate Students,https://library.georgetown.edu/policies/borrowing/materials/books,2026-09-19,not-stated,public-source
+borrowing-media,data/library-policy/borrowing-media.md,Borrowing Media,https://library.georgetown.edu/policies/borrowing/materials/media,2026-09-19,not-stated,public-source
+course-reserves-faculty,data/library-policy/course-reserves-faculty.md,Course Reserves Information for Faculty,https://library.georgetown.edu/course-reserves/faculty,2026-09-19,not-stated,public-source
+course-reserves-student,data/library-policy/course-reserves-student.md,Course Reserves Information for Students,https://library.georgetown.edu/course-reserves/students,2026-09-19,not-stated,public-source
+equipment-loans,data/library-policy/equipment-loans.md,Equipment Loans,https://library.georgetown.edu/equipment,2026-09-19,not-stated,public-source
+interlibrary-consortium-loans,data/library-policy/interlibrary-consortium-loans.md,Interlibrary and Consortium Loans,https://library.georgetown.edu/loans,2026-09-19,not-stated,public-source
+library-use-policy,data/library-policy/library-use-policy.md,Library Use Policies,https://library.georgetown.edu/policies/library-use,2026-09-19,not-stated,public-source

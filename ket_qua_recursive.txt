@@ -1,0 +1,127 @@
+﻿=== CP5 RETRIEVAL BENCHMARK ===
+Data directory     : data\library-policy
+Strategy           : recursive
+Embedding backend  : gemini-embedding-001
+Documents          : 8
+Chunks loaded      : 31
+Chunks per document:
+  - borrowing-books-faculty: 1
+  - borrowing-books-undergraduate: 1
+  - borrowing-media: 4
+  - course-reserves-faculty: 8
+  - course-reserves-student: 3
+  - equipment-loans: 4
+  - interlibrary-consortium-loans: 6
+  - library-use-policy: 4
+
+========================================================================================
+Q1: How long can I borrow books?
+Gold document(s): borrowing-books-undergraduate
+Gold answer: For an undergraduate student, the number of books is unlimited and the loan period is 6 weeks.
+Answer markers: ['6 weeks']
+Metadata filter: {'audience': 'student'}
+  1. score=0.7170 doc_id=borrowing-books-undergraduate chunk=0 audience=student markers=['6 weeks']
+     # Borrowing Books - Undergraduate Students ## Georgetown Users | Type of Patron | # of Books | Loan Period | |------------------------|-----------:|-------------| | Undergraduate Students...
+  2. score=0.6802 doc_id=course-reserves-student chunk=0 audience=student markers=[]
+     # Course Reserves Information for Students ## Book Reserves Use the search bar above to look up physical books. You can search by the bookâ€™s title, the professorâ€™s last name, or the cours...
+  3. score=0.6580 doc_id=course-reserves-student chunk=1 audience=student markers=[]
+     Reserve items are available on a first come, first served basis. Reserve items cannot be held, recalled, or renewed. ## Overdue Fines for Reserve Materials - 2 hour, 4 hour and 24 hour re...
+Gold doc rank       : 1
+Naive (doc_id) hit  : YES
+Content hit         : YES
+Points              : 2/2
+
+  --- A/B: Q1 WITHOUT metadata filter ---
+Metadata filter: None
+  1. score=0.7170 doc_id=borrowing-books-undergraduate chunk=0 audience=student markers=['6 weeks']
+     # Borrowing Books - Undergraduate Students ## Georgetown Users | Type of Patron | # of Books | Loan Period | |------------------------|-----------:|-------------| | Undergraduate Students...
+  2. score=0.7117 doc_id=borrowing-books-faculty chunk=0 audience=faculty markers=[]
+     # Borrowing Books - Faculty ## Georgetown Users | Type of Patron | # of Books | Loan Period | |--------------------------------------------------------------|-----------:|----------------...
+  3. score=0.6802 doc_id=course-reserves-student chunk=0 audience=student markers=[]
+     # Course Reserves Information for Students ## Book Reserves Use the search bar above to look up physical books. You can search by the bookâ€™s title, the professorâ€™s last name, or the cours...
+Gold doc rank       : 1
+Naive (doc_id) hit  : YES
+Content hit         : YES
+Points              : 2/2
+
+========================================================================================
+Q2: How many reserve items may a student borrow at one time?
+Gold document(s): course-reserves-student
+Gold answer: Students may borrow up to three reserve items at one time.
+Answer markers: ['up to three reserve items']
+Metadata filter: None
+  1. score=0.8380 doc_id=course-reserves-student chunk=0 audience=student markers=['up to three reserve items']
+     # Course Reserves Information for Students ## Book Reserves Use the search bar above to look up physical books. You can search by the bookâ€™s title, the professorâ€™s last name, or the cours...
+  2. score=0.8010 doc_id=course-reserves-student chunk=1 audience=student markers=[]
+     Reserve items are available on a first come, first served basis. Reserve items cannot be held, recalled, or renewed. ## Overdue Fines for Reserve Materials - 2 hour, 4 hour and 24 hour re...
+  3. score=0.7463 doc_id=course-reserves-faculty chunk=0 audience=faculty markers=[]
+     # Course Reserves Information for Faculty ## Book Reserves Faculty members can make requests for physical books to be placed on reserve by using this Book Reserve Form. More information o...
+Gold doc rank       : 1
+Naive (doc_id) hit  : YES
+Content hit         : YES
+Points              : 2/2
+
+========================================================================================
+Q3: How do I request library equipment, and how far in advance must I reserve it?
+Gold document(s): equipment-loans
+Gold answer: From the equipment page, click "Reserve this item", log into the library account, and make the request. Reservations must be made at least 1 day in advance.
+Answer markers: ['Reserve this item', 'at least 1 day in advance']
+Metadata filter: None
+  1. score=0.7846 doc_id=equipment-loans chunk=0 audience=all markers=['Reserve this item']
+     # Equipment Loans ## Requesting Equipment Use the category links below to find the equipment you want to reserve. From the equipment page for the item you want, click the blue "Reserve th...
+  2. score=0.7617 doc_id=equipment-loans chunk=1 audience=all markers=['at least 1 day in advance']
+     Reservations must be made at least 1 day in advance. It will be on hold shelf for up to 24hrs of pickup date. The pickup location is the main Service Desk on the third floor of Lauinger L...
+  3. score=0.7016 doc_id=course-reserves-student chunk=1 audience=student markers=[]
+     Reserve items are available on a first come, first served basis. Reserve items cannot be held, recalled, or renewed. ## Overdue Fines for Reserve Materials - 2 hour, 4 hour and 24 hour re...
+Gold doc rank       : 1
+Naive (doc_id) hit  : YES
+Content hit         : YES
+Points              : 2/2
+
+========================================================================================
+Q4: How long do Interlibrary Loan requests usually take to arrive?
+Gold document(s): interlibrary-consortium-loans
+Gold answer: Average delivery times for Interlibrary Loans are 7-14 business days.
+Answer markers: ['7-14 business days']
+Metadata filter: None
+  1. score=0.7368 doc_id=interlibrary-consortium-loans chunk=3 audience=all markers=['7-14 business days']
+     HoyaSearch items designated "Available at Lauinger Library Off-Campus Storage" or "Consortium Libraries" generally take 1-3 business days to arrive. HoyaSearch items designated "Interlibr...
+  2. score=0.7299 doc_id=interlibrary-consortium-loans chunk=1 audience=all markers=[]
+     If the material you need is not available at Georgetown or Consortium Libraries, place a request through Interlibrary Loan. After you place the request, ILL staff will attempt to find an ...
+  3. score=0.6929 doc_id=interlibrary-consortium-loans chunk=2 audience=all markers=[]
+     Check the journal title in Journal Finder or HoyaSearch first. If the desired journal volume and issue is not available, go to step 2. If Lauinger, Woodstock, or Blommer Science Libraries...
+Gold doc rank       : 1
+Naive (doc_id) hit  : YES
+Content hit         : YES
+Points              : 2/2
+
+========================================================================================
+Q5: Where is food allowed in Lauinger Library, and what kinds of food are prohibited?
+Gold document(s): library-use-policy
+Gold answer: Food is allowed only on the second floor of Lauinger Library. Examples of prohibited food include pizza, hamburgers, fries, ice cream, hot subs, and other smelly, greasy, or messy foods.
+Answer markers: ['second floor', 'pizza']
+Metadata filter: None
+  1. score=0.8580 doc_id=library-use-policy chunk=1 audience=all markers=['second floor']
+     - Do not disturb the research and study of other users. - Do not tamper with or damage University resources and property. - Do not hamper the work of Library staff. - Observe Quiet Study ...
+  2. score=0.8015 doc_id=library-use-policy chunk=2 audience=all markers=['pizza']
+     - Examples of prohibited food: pizza, hamburgers, fries, ice cream, hot subs or any other smelly, greasy or messy foods. - Smoking and use of tobacco or e-cigarettes of any kind is prohib...
+  3. score=0.7030 doc_id=library-use-policy chunk=0 audience=all markers=[]
+     # Library Use Policies The primary purpose of Georgetown University Library is to support the research and information needs of the University's students, faculty and staff. They have pri...
+Gold doc rank       : 1
+Naive (doc_id) hit  : YES
+Content hit         : YES
+Points              : 2/2
+
+========================================================================================
+=== CP6 SCORING SUMMARY ===
+Naive = gold doc_id in top-3; Content = all answer markers in top-3 context.
+Query            Naive  Content  Points
+Q1               YES    YES      2/2
+Q1 (no filter)   YES    YES      2/2
+Q2               YES    YES      2/2
+Q3               YES    YES      2/2
+Q4               YES    YES      2/2
+Q5               YES    YES      2/2
+Naive doc hits in top-3     : 5/5
+Content-relevant in top-3   : 5/5
+Total points                : 10/10
